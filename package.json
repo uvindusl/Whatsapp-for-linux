@@ -2,8 +2,9 @@
   "name": "whatsapp-for-linux",
   "version": "1.0.0",
   "description": "Whatsapp app for linux",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/uvindusl/Whatsapp-for-linux/issues"
   },
-  "homepage": "https://github.com/uvindusl/Whatsapp-for-linux#readme"
+  "homepage": "https://github.com/uvindusl/Whatsapp-for-linux#readme",
+  "devDependencies": {
+    "electron": "^37.2.3"
+  }
 }
