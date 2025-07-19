@@ -1,0 +1,22 @@
+{
+  "name": "whatsapp-for-linux",
+  "version": "1.0.0",
+  "description": "Whatsapp app for linux",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uvindusl/Whatsapp-for-linux.git"
+  },
+  "keywords": [
+    "Whatsapp"
+  ],
+  "author": "Uvindu Sankalpa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uvindusl/Whatsapp-for-linux/issues"
+  },
+  "homepage": "https://github.com/uvindusl/Whatsapp-for-linux#readme"
+}
