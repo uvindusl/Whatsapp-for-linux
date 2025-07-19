@@ -1,0 +1,9 @@
+{
+  "appId": "com.uvindu.com",
+  "icon": "assets/512x512.png",
+  "linux": {
+    "target": "deb",
+    "icon": "assets/512x512.png",
+    "category": "Social"
+  }
+}

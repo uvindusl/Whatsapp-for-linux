@@ -1,11 +1,11 @@
 {
-  "name": "whatsapp-for-linux",
+  "name": "Whatsapp",
   "version": "1.0.0",
   "description": "Whatsapp app for linux",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -14,13 +14,17 @@
   "keywords": [
     "Whatsapp"
   ],
-  "author": "Uvindu Sankalpa",
+  "author": {
+    "name": "Uvindu Sankalpa",
+    "email": "uvindusankalpa2021@gmail.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/uvindusl/Whatsapp-for-linux/issues"
   },
   "homepage": "https://github.com/uvindusl/Whatsapp-for-linux#readme",
   "devDependencies": {
-    "electron": "^37.2.3"
+    "electron": "^37.2.3",
+    "electron-builder": "^26.0.12"
   }
 }
