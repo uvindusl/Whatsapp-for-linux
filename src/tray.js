@@ -7,10 +7,12 @@ function createTrayIconFor(window, app) {
   const showWindowMenuItem = new MenuItem({
     label: "Show Window",
     click: () => {
-      if (window.isVisible()) {
-        window.focus();
-      } else {
-        window.show();
+      if (window) {
+        if (window.isVisible()) {
+          window.focus();
+        } else {
+          window.show();
+        }
       }
     },
   });
@@ -18,14 +20,15 @@ function createTrayIconFor(window, app) {
   const quitAppMenuItem = new MenuItem({
     label: "Quit",
     click: () => {
-      window.destroy();
+      if (window) {
+        window.destroy();
+      }
       app.quit();
     },
   });
 
   const contextMenu = Menu.buildFromTemplate([
     showWindowMenuItem,
-    { type: "separator" },
     { type: "separator" },
     quitAppMenuItem,
   ]);

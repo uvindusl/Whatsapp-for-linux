@@ -1,9 +1,10 @@
-const { app, Notification } = require("electron/main");
-const { loadWhatsApp } = require("./src/window");
+const { app, BrowserWindow, ipcMain } = require("electron");
+const { loadWhatsApp, sendNotification } = require("./src/window");
 const { createTrayIconFor } = require("./src/tray");
 const { clearServiceWorkers } = require("./src/session");
+const path = require("path");
 
-let window;
+let mainWindowInstance;
 let tray;
 
 const isFirstInstance = app.requestSingleInstanceLock();
@@ -16,38 +17,60 @@ if (!isFirstInstance) {
 }
 
 app.on("second-instance", () => {
-  if (window) {
-    if (window.isMinimized()) {
-      window.restore();
+  if (mainWindowInstance) {
+    if (mainWindowInstance.isMinimized()) {
+      mainWindowInstance.restore();
     }
-    window.focus();
+    mainWindowInstance.show();
+    mainWindowInstance.focus();
   }
 });
 
-const startApp = () => {
-  window = loadWhatsApp();
-  tray = createTrayIconFor(window, app);
-  if (Notification && typeof Notification.on === "function") {
-    Notification.on("click", () => {
-      console.log("Notification clicked!");
-      if (window) {
-        if (window.isMinimized()) {
-          window.restore();
-        }
-        window.show();
-        window.focus();
-      }
-    });
-  } else {
-    console.warn(
-      "Electron's 'Notification.on(\"click\")' is not available or functional. Notification clicks may not open the app directly."
-    );
-    console.warn(
-      "This is often due to running in a confined environment (e.g., Flatpak, Snap) using Portal notifications."
-    );
-  }
+const createAndLoadMainWindow = () => {
+  mainWindowInstance = loadWhatsApp();
+  tray = createTrayIconFor(mainWindowInstance, app);
 };
 
-app.on("ready", startApp);
+app.whenReady().then(() => {
+  createAndLoadMainWindow();
+
+  app.on("activate", () => {
+    if (BrowserWindow.getAllWindows().length === 0 && !mainWindowInstance) {
+      createAndLoadMainWindow();
+    } else if (mainWindowInstance) {
+      if (mainWindowInstance.isMinimized()) {
+        mainWindowInstance.restore();
+      }
+      mainWindowInstance.show();
+      mainWindowInstance.focus();
+    }
+  });
+});
+
 app.on("before-quit", clearServiceWorkers);
-app.on("window-all-closed", () => app.quit());
+
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
+  }
+});
+
+ipcMain.on(
+  "whatsapp-notification-from-renderer",
+  (event, { title, body, icon }) => {
+    sendNotification(title, body, icon);
+  }
+);
+
+ipcMain.on("update-badge-count", (event, count) => {
+  if (app.isReady() && app.setBadgeCount) {
+    app.setBadgeCount(count);
+    if (
+      process.platform === "darwin" &&
+      count > 0 &&
+      !mainWindowInstance.isFocused()
+    ) {
+      app.dock.bounce("informational");
+    }
+  }
+});
