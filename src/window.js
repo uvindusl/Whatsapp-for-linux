@@ -6,7 +6,9 @@ const userAgent =
 
 let mainWindow;
 
-function loadWhatsApp() {
+function loadWhatsApp(options = {}) {
+  const { show = true } = options; // This line is crucial!
+
   mainWindow = new BrowserWindow({
     width: 1024,
     height: 768,
@@ -16,6 +18,7 @@ function loadWhatsApp() {
       contextIsolation: true,
       nodeIntegration: false,
     },
+    show: show, // This line uses the 'show' option!
   });
 
   mainWindow.setMenuBarVisibility(false);
