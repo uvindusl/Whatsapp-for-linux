@@ -6,7 +6,8 @@
   "scripts": {
     "start": "electron .",
     "build": "electron-builder --linux dir",
-    "snap": "snapcraft"
+    "snap": "snapcraft",
+    "dist": "electron-builder"
   },
   "repository": {
     "type": "git",
