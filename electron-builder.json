@@ -1,9 +1,22 @@
 {
-  "appId": "com.uvindu.com",
+  "appId": "com.uvindusl.whatsappLinux",
+  "productName": "unofficial-whatsapp",
   "icon": "assets/512x512.png",
+  "files": [
+    "main.js",
+    "src/**/*",
+    "assets/**/*",
+    "package.json",
+    "!snap",
+    "!parts",
+    "!stage",
+    "!prime",
+    "!*.snap"
+  ],
   "linux": {
-    "target": "deb",
+    "target": ["dir"],
     "icon": "assets/512x512.png",
-    "category": "Social"
+    "category": "Network",
+    "executableName": "whatsapp"
   }
 }

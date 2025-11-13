@@ -1,11 +1,12 @@
 {
-  "name": "whatsapp",
-  "version": "1.1.1",
+  "name": "unofficial-whatsapp",
+  "version": "1.1.0-stable",
   "description": "Whatsapp app for linux",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder"
+    "build": "electron-builder --linux dir",
+    "snap": "snapcraft"
   },
   "repository": {
     "type": "git",
@@ -26,7 +27,7 @@
   },
   "homepage": "https://github.com/uvindusl/Whatsapp-for-linux#readme",
   "devDependencies": {
-    "electron": "^37.2.3",
+    "electron": "^39.1.2",
     "electron-builder": "^26.0.12"
   },
   "dependencies": {

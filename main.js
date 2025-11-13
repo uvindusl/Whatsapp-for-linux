@@ -1,5 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
-const { loadWhatsApp, sendNotification } = require("./src/window"); // Make sure this path is correct
+const { loadWhatsApp, sendNotification } = require("./src/window");
 const { createTrayIconFor } = require("./src/tray");
 const { clearServiceWorkers } = require("./src/session");
 const path = require("path");
@@ -28,11 +28,8 @@ app.on("second-instance", () => {
 });
 
 const createAndLoadMainWindow = () => {
-  // Determine if the window should start hidden based on command-line arguments
-  // This is crucial for auto-launch with isHidden: true
   const shouldStartHidden = process.argv.includes("--hidden");
 
-  // Pass the 'show' option to loadWhatsApp
   mainWindowInstance = loadWhatsApp({ show: !shouldStartHidden });
   tray = createTrayIconFor(mainWindowInstance, app);
 };
@@ -40,15 +37,12 @@ const createAndLoadMainWindow = () => {
 app.whenReady().then(() => {
   createAndLoadMainWindow();
 
-  // IMPORTANT: Replace "YourWhatsAppAppName" with the actual name of your app
-  // as defined in your package.json (the "name" field).
-  // This name is used by auto-launch to identify your application.
-  const yourAppName = "WhatsappDesktop"; // Example: If your package.json name is "whatsapp-desktop"
+  const yourAppName = "WhatsappDesktop";
 
   const autoLauncher = new AutoLaunch({
     name: yourAppName,
-    path: app.getPath("exe"), // This gets the path to your executable
-    isHidden: true, // This tells auto-launch to pass '--hidden' as an argument
+    path: app.getPath("exe"),
+    isHidden: true,
   });
 
   autoLauncher.isEnabled().then((isEnabled) => {
@@ -65,14 +59,9 @@ app.whenReady().then(() => {
   });
 
   app.on("activate", () => {
-    // On macOS, when the dock icon is clicked and no windows are open,
-    // we should re-create a window or show the existing one.
     if (BrowserWindow.getAllWindows().length === 0 && !mainWindowInstance) {
-      // If there are no windows and no main window instance, create one
-      // In this case, you usually want it to show
       createAndLoadMainWindow();
     } else if (mainWindowInstance) {
-      // If there's an instance, ensure it's visible and focused
       if (mainWindowInstance.isMinimized()) {
         mainWindowInstance.restore();
       }
@@ -85,7 +74,6 @@ app.whenReady().then(() => {
 app.on("before-quit", clearServiceWorkers);
 
 app.on("window-all-closed", () => {
-  // On macOS, applications typically stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== "darwin") {
     app.quit();
   }
