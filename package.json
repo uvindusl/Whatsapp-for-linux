@@ -1,31 +1,12 @@
 {
-  "name": "whatsapp",
+  "name": "unofficial-whatsapp",
   "version": "1.1.0-stable",
   "description": "Whatsapp app for linux",
   "main": "main.js",
-  "build": {
-    "appId": "com.uvindusl.whatsappforlinux",
-    "productName": "Whatsapp for Linux",
-    "linux": {
-      "target": "flatpak",
-      "category": "Network;Utility;Chat",
-      "icon": "../assets/512x512.png"
-    },
-    "flatpak": {
-      "finishArgs": [
-        "--share=ipc",
-        "--device=dri",
-        "--socket=x11",
-        "--socket=pulseaudio",
-        "--share=network",
-        "--filesystem=home",
-        "--talk-name=org.freedesktop.Notifications"
-      ]
-    }
-  },
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder"
+    "build": "electron-builder --linux dir",
+    "snap": "snapcraft"
   },
   "repository": {
     "type": "git",
@@ -46,7 +27,7 @@
   },
   "homepage": "https://github.com/uvindusl/Whatsapp-for-linux#readme",
   "devDependencies": {
-    "electron": "^37.2.3",
+    "electron": "^39.1.2",
     "electron-builder": "^26.0.12"
   },
   "dependencies": {

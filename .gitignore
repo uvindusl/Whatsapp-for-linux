@@ -1,2 +1,8 @@
 node_modules
 dist
+parts
+overlay
+prime
+stage
+.craft
+unofficial-whatsapp_1.1.0_amd64.snap
