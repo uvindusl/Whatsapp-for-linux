@@ -1,0 +1,114 @@
+name: unofficial-whatsapp 
+version: "1.1.0"
+summary: Unofficial WhatsApp Web Desktop Client 
+description: |
+  An unofficial desktop application for WhatsApp Web.
+  
+  DISCLAIMER: This is NOT an official WhatsApp application.
+  This is an independent open-source project that wraps WhatsApp Web.
+  WhatsApp is a trademark of Meta Platforms, Inc.
+  
+  Features:
+  - Native desktop integration
+  - System notifications
+  - Audio/video calls support
+  - Media sharing
+  
+  This application connects to WhatsApp Web and requires an internet connection.
+title: WhatsApp Web Desktop
+contact: uvindusankalpa2021@gmail.com
+website: https://github.com/uvindusl/Whatsapp-for-linux
+source-code: https://github.com/uvindusl/Whatsapp-for-linux 
+issues: https://github.com/uvindusl/Whatsapp-for-linux/issues
+base: core24
+confinement: strict
+grade: stable
+icon: assets/512x512.png
+license: MIT
+
+platforms:
+  amd64:
+
+apps:
+  unofficial-whatsapp:  # Changed from whatsapp-for-linux
+    command: bin/launcher
+    extensions: [gnome]
+    plugs:
+      - desktop
+      - desktop-legacy
+      - home
+      - network
+      - network-bind
+      - pulseaudio
+      - audio-playback
+      - audio-record
+      - camera
+      - browser-support
+      - x11
+      - unity7
+      - opengl
+      - gsettings
+
+parts:
+  whatsapp:
+    plugin: nil
+    source: .
+    stage-packages:
+      - libnss3
+      - libnspr4
+      - libatk1.0-0
+      - libatk-bridge2.0-0
+      - libcups2
+      - libdbus-1-3
+      - libgtk-3-0
+      - libgbm1
+      - libasound2
+      - libdrm2
+      - libnotify4
+      - libxss1
+      - libxcomposite1
+      - libxdamage1
+      - libxrandr2
+      - libx11-xcb1
+      - fonts-liberation
+      - fonts-dejavu-core
+      - libxtst6
+      - libxfixes3
+      - libxcursor1
+      - libxi6
+    override-build: |
+      craftctl default
+      
+      # Copy the pre-built electron app
+      mkdir -p $CRAFT_PART_INSTALL/bin
+      cp -r $CRAFT_PROJECT_DIR/dist/linux-unpacked/* $CRAFT_PART_INSTALL/bin/
+      
+      # Create launcher script
+      cat > $CRAFT_PART_INSTALL/bin/launcher << 'EOFMARKER'
+      #!/bin/bash
+      # Force X11 backend
+      export WAYLAND_DISPLAY=""
+      export GDK_BACKEND=x11
+      export QT_QPA_PLATFORM=xcb
+      export ELECTRON_TRASH=gio
+      # Run WhatsApp with X11
+      exec "$SNAP/bin/whatsapp" --no-sandbox --ozone-platform=x11 "$@"
+      EOFMARKER
+      
+      chmod +x $CRAFT_PART_INSTALL/bin/launcher
+      
+    override-prime: |
+      craftctl default
+      
+      # Create meta/gui directory
+      mkdir -p $CRAFT_PRIME/meta/gui
+      
+      # Copy icon
+      if [ -f "$CRAFT_PROJECT_DIR/assets/512x512.png" ]; then
+        cp $CRAFT_PROJECT_DIR/assets/512x512.png $CRAFT_PRIME/meta/gui/icon.png
+      fi
+      
+      # Copy desktop file
+      if [ -f "$CRAFT_PROJECT_DIR/snap/local/whatsapp.desktop" ]; then
+        cp "$CRAFT_PROJECT_DIR/snap/local/whatsapp.desktop" $CRAFT_PRIME/meta/gui/unofficial-whatsapp.desktop
+      fi

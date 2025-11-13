@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.1.0
+Type=Application
+Name=Unofficial Whatsapp
+Comment=Unofficial WhatsApp Desktop Client
+Exec=unofficial-whatsapp
+Icon=${SNAP}/meta/gui/icon.png
+Terminal=false
+Categories=Network;InstantMessaging;
+StartupWMClass=whatsapp
+Keywords=whatsapp;chat;messag<LeftMouse>ing;
