@@ -14,7 +14,7 @@
     "!*.snap"
   ],
   "linux": {
-    "target": ["dir"],
+    "target": ["dir" , "deb"],
     "icon": "assets/512x512.png",
     "category": "Network",
     "executableName": "whatsapp"
