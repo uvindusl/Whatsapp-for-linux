@@ -52,5 +52,5 @@ jobs:
         env:
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
         with:
-          snap: *.snap
+          snap: "*.snap"
           release: stable
