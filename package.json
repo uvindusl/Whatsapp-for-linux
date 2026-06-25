@@ -7,7 +7,8 @@
     "start": "electron .",
     "build": "electron-builder --linux dir",
     "snap": "snapcraft",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "flatpak": "electron-builder --linux flatpak"
   },
   "repository": {
     "type": "git",

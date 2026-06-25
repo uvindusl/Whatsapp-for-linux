@@ -83,6 +83,9 @@ parts:
       mkdir -p $CRAFT_PART_INSTALL/bin
       cp -r $CRAFT_PROJECT_DIR/dist/linux-unpacked/* $CRAFT_PART_INSTALL/bin/
       
+      # Copy assets outside ASAR for Snap tray icon support
+      cp -r $CRAFT_PROJECT_DIR/assets $CRAFT_PART_INSTALL/bin/assets/
+      
       # Create launcher script
       cat > $CRAFT_PART_INSTALL/bin/launcher << 'EOFMARKER'
       #!/bin/bash

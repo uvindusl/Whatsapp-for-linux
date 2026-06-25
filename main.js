@@ -3,6 +3,7 @@ const { loadWhatsApp, sendNotification } = require("./src/window");
 const { createTrayIconFor } = require("./src/tray");
 const { clearServiceWorkers } = require("./src/session");
 const path = require("path");
+const fs = require("fs");
 const AutoLaunch = require("auto-launch");
 
 let mainWindowInstance;
@@ -10,6 +11,7 @@ let tray;
 
 const isFirstInstance = app.requestSingleInstanceLock();
 
+app.commandLine.appendSwitch("enable-unsafe-swiftshader");
 app.disableHardwareAcceleration();
 
 if (!isFirstInstance) {
@@ -45,16 +47,23 @@ app.whenReady().then(() => {
     isHidden: true,
   });
 
+  const autoLaunchFlag = path.join(app.getPath("userData"), ".auto-launch-configured");
+
   autoLauncher.isEnabled().then((isEnabled) => {
     if (!isEnabled) {
-      autoLauncher
-        .enable()
-        .then(() => {
-          console.log("Auto-launch enabled successfully.");
-        })
-        .catch((err) => {
-          console.error("Failed to enable auto-launch:", err);
-        });
+      try {
+        fs.accessSync(autoLaunchFlag);
+      } catch {
+        autoLauncher
+          .enable()
+          .then(() => {
+            fs.writeFileSync(autoLaunchFlag, "", "utf-8");
+            console.log("Auto-launch enabled on first run.");
+          })
+          .catch((err) => {
+            console.error("Failed to enable auto-launch:", err);
+          });
+      }
     }
   });
 
