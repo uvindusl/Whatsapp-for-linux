@@ -11,8 +11,8 @@ description: |
   Features:
   - Native desktop integration
   - System notifications
-  - Audio/video calls support
   - Media sharing
+  - Incoming and outgoing calls support
   
   This application connects to WhatsApp Web and requires an internet connection.
 title: WhatsApp Web Desktop

@@ -47,10 +47,15 @@ jobs:
         with:
           name: snap
 
+      - name: Install Snapcraft
+        run: sudo snap install --classic snapcraft
+
       - name: Publish to Snap Store
-        uses: snapcore/action-publish@v1
         env:
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
-        with:
-          snap: "*.snap"
-          release: stable
+        run: |
+          echo "$SNAPCRAFT_STORE_CREDENTIALS" > credentials.txt
+          snapcraft login --with credentials.txt
+          rm credentials.txt
+          SNAP_FILE=$(ls *.snap | head -1)
+          snapcraft upload --release stable "$SNAP_FILE"
