@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron .",
     "build": "electron-builder --linux dir",
-    "snap": "snapcraft",
+    "snap": "snapcraft pack",
     "dist": "electron-builder",
     "flatpak": "electron-builder --linux flatpak"
   },
