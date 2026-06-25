@@ -14,9 +14,26 @@
     "!*.snap"
   ],
   "linux": {
-    "target": ["dir" , "deb"],
+    "target": ["dir", "deb", "flatpak"],
     "icon": "assets/512x512.png",
     "category": "Network",
     "executableName": "whatsapp"
+  },
+  "flatpak": {
+    "runtime": "org.freedesktop.Platform",
+    "runtimeVersion": "24.08",
+    "sdk": "org.freedesktop.Sdk",
+    "branch": "stable",
+    "finishArgs": [
+      "--share=network",
+      "--share=ipc",
+      "--socket=x11",
+      "--socket=pulseaudio",
+      "--device=dri",
+      "--filesystem=host",
+      "--talk-name=org.freedesktop.Notifications",
+      "--talk-name=org.kde.StatusNotifierWatcher",
+      "--own-name=org.kde.*"
+    ]
   }
 }

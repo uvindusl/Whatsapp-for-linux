@@ -1,4 +1,5 @@
 const { contextBridge, ipcRenderer, Notification } = require("electron");
+
 window.addEventListener("DOMContentLoaded", () => {
   const OriginalNotification = window.Notification;
 
@@ -8,8 +9,6 @@ window.addEventListener("DOMContentLoaded", () => {
       body: options.body || "",
       icon: options.icon || "",
     });
-
-    return new OriginalNotification(title, options);
   };
 
   window.Notification.requestPermission =

@@ -1,8 +1,18 @@
-const { Tray, Menu, MenuItem } = require("electron");
+const { Tray, Menu, MenuItem, nativeImage } = require("electron");
 const path = require("path");
 
+function getTrayIcon() {
+  let iconPath;
+  if (process.env.SNAP) {
+    iconPath = path.join(process.env.SNAP, "bin", "assets", "512x512.png");
+  } else {
+    iconPath = path.join(__dirname, "../assets/512x512.png");
+  }
+  return nativeImage.createFromPath(iconPath).resize({ width: 24, height: 24 });
+}
+
 function createTrayIconFor(window, app) {
-  const tray = new Tray(path.join(__dirname, "../assets/512x512.png"));
+  const tray = new Tray(getTrayIcon());
 
   const showWindowMenuItem = new MenuItem({
     label: "Show Window",

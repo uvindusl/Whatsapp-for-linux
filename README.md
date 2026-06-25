@@ -13,7 +13,7 @@ This repository hosts an unofficial WhatsApp desktop application specifically op
 
 * **All Core WhatsApp Features:** Supports sending and receiving messages, photos, videos, documents, and voice messages.
 
-* **Desktop Notifications:** (Known issue: Small bug in notifications - see "Known Issues" below) Receive desktop notifications for new messages.
+* **Desktop Notifications:** Receive desktop notifications for new messages. Clicking a notification brings the window into focus.
 
 ## Installation
 
@@ -71,7 +71,6 @@ Once installed, launch the application from your applications menu. You'll be pr
 
 ## Known Issues
 
-* **Notification Bug:** There's a small bug affecting desktop notifications. While notifications generally appear, when you click on them, the application will not open or come into focus. I am actively working on a fix for this.
 
 ## License
 

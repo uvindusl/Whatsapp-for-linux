@@ -50,7 +50,11 @@ function loadWhatsApp(options = {}) {
     );
   });
 
-  mainWindow.loadURL("https://web.whatsapp.com/", { userAgent });
+  mainWindow
+    .loadURL("https://web.whatsapp.com/", { userAgent })
+    .catch((err) => {
+      console.error("Failed to load WhatsApp Web:", err);
+    });
 
   return mainWindow;
 }
@@ -66,12 +70,16 @@ function setupExternalLinkHandling(webContents) {
 }
 
 function isExternalLink(url) {
-  const whatsappDomains = [
-    "whatsapp.com",
-    "web.whatsapp.com",
-    "chat.whatsapp.com",
-  ];
-  return !whatsappDomains.some((domain) => url.includes(domain));
+  try {
+    const parsed = new URL(url);
+    const hostname = parsed.hostname.toLowerCase();
+    const whatsappDomains = ["whatsapp.com", "web.whatsapp.com", "chat.whatsapp.com"];
+    return !whatsappDomains.some(
+      (domain) => hostname === domain || hostname.endsWith("." + domain)
+    );
+  } catch {
+    return true;
+  }
 }
 
 function checkNotificationPermission() {
@@ -99,7 +107,10 @@ function sendNotification(title, body, iconPath) {
           mainWindow.restore();
         }
         mainWindow.show();
+        mainWindow.setVisibleOnAllWorkspaces(true);
         mainWindow.focus();
+        mainWindow.moveTop();
+        mainWindow.setVisibleOnAllWorkspaces(false);
       } else {
         console.log(
           "Notification clicked, but main window was closed. Cannot show."
