@@ -1,4 +1,7 @@
 [![unofficial-whatsapp](https://snapcraft.io/unofficial-whatsapp/badge.svg)](https://snapcraft.io/unofficial-whatsapp)
+
+# Currently i don't have time to manage this if there anyone who want to maintain this just send a email.
+
 # Unofficial WhatsApp for Ubuntu
 
 This repository hosts an unofficial WhatsApp desktop application specifically optimized for Ubuntu, providing a seamless messaging experience directly from your desktop.
